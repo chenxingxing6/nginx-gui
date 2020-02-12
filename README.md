@@ -1,13 +1,6 @@
 ## Nginx可视化配置平台
-<p align="center">
-  <a href="https://github.com/996icu/996.ICU/blob/master/LICENSE">
-    <img alt="996icu" src="https://img.shields.io/badge/license-NPL%20(The%20996%20Prohibited%20License)-blue.svg">
-  </a>
 
-  <a href="https://github.com/onlyGuo/nginx-gui/blob/master/LICENSE">
-    <img alt="code style" src="https://img.shields.io/github/license/onlyGuo/nginx-gui.svg?style=popout">
-  </a>
-</p>
+
 
 ## 实现原理
 其实就是通过web可视化操作，修改nginx服务的配置文件nginx.conf，重新启动。
