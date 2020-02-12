@@ -1,7 +1,4 @@
-<p align="center">
-  The nginx GUI makes maintenance easy
-</p>
-
+## Nginx可视化配置平台
 <p align="center">
   <a href="https://github.com/996icu/996.ICU/blob/master/LICENSE">
     <img alt="996icu" src="https://img.shields.io/badge/license-NPL%20(The%20996%20Prohibited%20License)-blue.svg">
@@ -12,54 +9,95 @@
   </a>
 </p>
 
-## Download
-### Builder release-1.6
-If you want to [download](https://github.com/onlyGuo/nginx-gui/releases/tag/1.6) this package, please go to this link: [https://github.com/onlyGuo/nginx-gui/releases/tag/1.6](https://github.com/onlyGuo/nginx-gui/releases/tag/1.6)
-### China download node
-这里提供了国内下载节点， 如果您无法通过以上连接下载release包，可以尝试从下方连接下载(但您需要支付流量费用)：
-- [Nginx-GUI-For-Linux_X64_v1.6.zip](http://disk.321aiyi.com/share/b88e02f8aca04cdd8ce3a1fb02499e79)
-- [Nginx-GUI-For-Linux_X86_v1.6.zip](http://disk.321aiyi.com/share/6b945535bfc0437bb2b91ff2fa2f97b1)
-- [Nginx-GUI-For-Mac_v1.6.zip](http://disk.321aiyi.com/share/95075b8f92bb49c297085cba9c1c89a9)
-- [Nginx-GUI-For-Windows_x64_v1.6.zip](http://disk.321aiyi.com/share/235943a302e140a4b69b005f4874446e)
-- [国内节点采用的云盘项目开源地址](https://github.com/onlyGuo/disk)
+## 实现原理
+其实就是通过web可视化操作，修改nginx服务的配置文件nginx.conf，重新启动。
+常用命令如下：
+```html
+启动服务：nginx -c conf配置文件路径
+nginx -c D:\develop\nginx-1.16.1\conf\nginx.conf
+
+停止服务：nginx.exe -s stop
+
+重启服务：nginx.exe -s reload
+nginx -s reload -c D:\develop\nginx-1.16.1\conf\nginx.conf
+
+检查配置：nginx -t
+nginx -t -c D:\develop\nginx-1.16.1\conf\nginx.conf
+```
+![](doc/1.png)
+
+---
+## 实现效果
+![](doc/2.png)
+
+![](doc/3.png)
+
+![](doc/4.png)
+
+![](doc/5.png)
+
+![](doc/6.png)
+
+说白了就是围绕nginx.conf文件来进行web页面上操作。
+
+---
+
+## 如何运行该项目
+> 1.拉取项目到Idea里面  
+> 2.修改conf.properties中nginx文件路径    
+> 3.启动该项目（springboot）  
+> 4.访问：http://localhost:8886  
+> 5.用户名：lxh  密码：123456  
+
+里面细节自己慢慢研究
+
+---
+## nginx配置文件
+```html
+worker_processes 1;
+events {
+  worker_connections 1024;
+}
+http {
+  include mime.types;
+  default_type application/octet-stream;
+  sendfile on;
+  keepalive_timeout 65;
+  upstream lxhstream_server {
+    #负载均衡配置
+    server 192.168.0.102:8080 weight=1;
+    server 192.168.0.102:8886 weight=3;
+  }
+  server {
+    listen 8080;
+    server_name localhost;
+  }
+  server {
+    listen 80;
+    server_name localhost;
+    location /baidu/ {
+      #百度
+      proxy_pass https://www.baidu.com/;
+    }
+    location /lxh/ {
+      proxy_set_header Host $host;
+      #负载均衡测试
+      proxy_pass http://lxhstream_server/;
+    }
+    access_log F:\log;
+    error_page 404 /40x.html;
+    error_page 500 /50x.html;
+  }
+}
+```
+
+---
+
+## 怎么测试该项目
+> 1.可以通过web页面控制nginx的启动关闭   
+> 2.可以配置监听规则，并能成功访问  
+> 3.错误页面配置  
+> 4.负载均衡配置
 
 
-## New idea
-If you like algorithms, you can implement them [here](https://github.com/onlyGuo/nginx-conf-analysis).  
-In the future, it will be a nginx configuration file management tool library supporting complete modules and files.
-
-## Quick start
-1. Download the release package.
-2. Unzip pachage to your {dir}.
-3. Edit the {dir}/conf/conf.properties, set your nginx path.
-4. Run {dir}/startup.sh or {dir}/startup.bat
-
-## How to use source code?
-
-1. If your system is Mac os or idea, please copy "conf.properties" to parent directory。
-
-2. Please eidt "conf.properties", fill in your nginx path to "conf.properties".
-
-3. Now, please experience!, default account and pwssword is "admin".
-
-## AC QQ Group
-群号:933481759
-
-## UI
-![登录](https://raw.githubusercontent.com/onlyGuo/nginx-gui/master/doc/login.png)
-
-![主页](https://raw.githubusercontent.com/onlyGuo/nginx-gui/master/doc/home.png)
-
-![监听](https://raw.githubusercontent.com/onlyGuo/nginx-gui/master/doc/lisner.png)
-
-![负载](https://raw.githubusercontent.com/onlyGuo/nginx-gui/master/doc/upstream.png)
-
-![规则](https://raw.githubusercontent.com/onlyGuo/nginx-gui/master/doc/location.png)
-
-![配置](https://raw.githubusercontent.com/onlyGuo/nginx-gui/master/doc/conf.png)
-
-## LICENCE
-
-[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
-
-[1]: https://github.com/oychao/riact/tree/master/demos
+---

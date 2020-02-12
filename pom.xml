@@ -6,7 +6,7 @@
 	<groupId>com.aiyi.server.manager.nginx</groupId>
 	<artifactId>nginx</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>nginx</name>
 	<description>Nginx GUI Manager Project</description>

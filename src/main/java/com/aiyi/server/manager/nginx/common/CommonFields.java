@@ -113,9 +113,10 @@ public class CommonFields {
     public static final class PROP {
 
         /**
-         * 账号Key
+         * 账号
          */
-        public static final String ACCOUNT = "account";
+        public static final String ACCOUNT_NAME = "account.user";
+        public static final String ACCOUNT_PWD = "account.pwd";
 
         /**
          * 默认配置

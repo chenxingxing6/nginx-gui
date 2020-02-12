@@ -83,6 +83,6 @@ public class PropsUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(get("bc.server.address"));
+        System.out.println(get("account.user"));
     }
 }

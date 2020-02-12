@@ -14,7 +14,7 @@ import com.aiyi.server.manager.nginx.interceptor.SessionInterceptor;
  * @Description :
  * @Author : 郭胜凯
  * @Creation Date : 2018年2月2日 上午11:25:51
- * @ModificationHistory Who When What ---------- ------------- -----------------------------------
+ * @ModificationHistory
  * 郭胜凯 2018年2月2日 create
  */
 @Configuration

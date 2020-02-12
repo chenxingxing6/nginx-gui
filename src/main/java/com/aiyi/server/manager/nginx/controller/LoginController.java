@@ -43,8 +43,9 @@ public class LoginController {
             throw new ValidationException("请填登陆密码");
         }
 
-        String string = PropsUtils.get(CommonFields.PROP.ACCOUNT + "." + user.getUsername());
-        if (null == string || !string.equals(user.getPassword())) {
+        String accountName = PropsUtils.get(CommonFields.PROP.ACCOUNT_NAME);
+        String accountPwd = PropsUtils.get(CommonFields.PROP.ACCOUNT_PWD);
+        if (!accountName.equalsIgnoreCase(user.getUsername()) || !accountPwd.equalsIgnoreCase(user.getPassword())) {
             throw new ValidationException("用户名或密码错误");
         }
         session.setAttribute(CommonFields.SESSION_KEY.LOGIN_USER, user.getUsername());
